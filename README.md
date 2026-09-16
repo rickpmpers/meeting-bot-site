@@ -1,5 +1,7 @@
 # meeting-bot-site
 
+**Live:** https://meetingbot.selfserved.ai
+
 Public landing page for the Meeting Bot concept — an AI that joins meetings as a
 participant and drives them under a Project Manager, Systems Architect, or Engineer
 persona, producing live plans and diagrams as the conversation happens.
@@ -14,5 +16,11 @@ repo and the shared `meeting-bot-concept/CONCEPT.md` working doc.
 
 ## Deploy
 
-Static site, intended for Hostinger. Upload `index.html` and `styles.css` to the
-hosting root (or point a build/deploy pipeline at this repo once one exists).
+Deployed as a Cloudflare Worker (`worker.js`, embeds `index.html`/`styles.css` inline)
+on the `selfserved.ai` Cloudflare account, served at `meetingbot.selfserved.ai` via a
+Worker route and a dedicated public Access policy (bypassing the account's default
+wildcard Google-SSO gate on `*.selfserved.ai`).
+
+To redeploy after editing `index.html`/`styles.css`, update the `HTML`/`CSS` constants
+in `worker.js` to match and push the script with `wrangler deploy` or the Cloudflare
+API (`PUT /accounts/:id/workers/scripts/meeting-bot-site`).
